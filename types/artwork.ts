@@ -8,5 +8,7 @@ export interface Artwork {
     description: string;
     artist_id: string;
     artist_title: string;
+    width: string;
+    height: string;
 }
   

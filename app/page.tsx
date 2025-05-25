@@ -1,4 +1,4 @@
-import { ArtworkCard } from './components/Card';
+import { ArtworkCard } from '../components/Card';
 import { Artwork } from '@/types/artwork';
 import {
   Pagination,
@@ -14,33 +14,33 @@ import {
 export const revalidate = 0;
 
 async function fetchArtworks(page = 1): Promise<Artwork[]> {
-  const res = await fetch(`https://api.artic.edu/api/v1/artworks?page=${page}&limit=5&fields=id,title,thumbnail,date_display,description,artist_id,artist_title,image_id`);
+  const res = await fetch(`https://api.artic.edu/api/v1/artworks?page=${page}&limit=20&fields=id,title,thumbnail,date_display,description,artist_id,artist_title,image_id,width,height`);
   const data = await res.json();
 
   //Add URL to artworks
   const artworksWithUrl: Artwork[] = data.data.map((artwork: Artwork) => ({
     ...artwork,
-    iiif_url: data.config.iiif_url
+    iiif_url: data.config.iiif_url,
+    width: artwork.width ?? 500,   // default to 500px if missing
   }));
 
   return artworksWithUrl;
 }
 
 type HomepageProps = {
-  searchParams?: {
-    page?: string;
-  };
+  searchParams: Promise<{ page?: string }>;
 };
 
 export default async function Homepage({ searchParams }: HomepageProps) {
-  const rawPage = Number(searchParams?.page);
+  const resolvedSearchParams = await searchParams;
+  const rawPage = Number(resolvedSearchParams?.page);
   const page = rawPage >= 1 ? rawPage : 1;
 
   const artworks: Artwork[] = await fetchArtworks(page);
 
   return (
     <main className="p-6">
-      <div className="flex flex-row" >
+      <div className="flex flex-row flex-wrap" >
         {
           artworks.map((artwork: Artwork) => (
             <ArtworkCard key={artwork.id} painting={artwork} />
