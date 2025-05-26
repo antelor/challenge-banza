@@ -1,6 +1,6 @@
 import { Artwork } from "@/types/artwork";
 
-//Creates query for homepage artworks
+//Creates string query for homepage artworks
 export function buildQueryString(
     page: number,
     searchQuery?: string,
@@ -48,6 +48,7 @@ export async function fetchArtworks(
     const url = `${baseUrl}?${queryString}`;
   
     const res = await fetch(url);
+    
     if (!res.ok) {
       console.error('Error fetching artworks:', res.statusText);
       return [];

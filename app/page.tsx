@@ -1,4 +1,4 @@
-import { ArtworkCard } from '@/components/ArtworkCard';
+import { HomepageDisplay } from '@/components/HomepageDisplay';
 import { Artwork } from '@/types/artwork';
 import { SearchBar } from '@/components/SearchBar';
 import { fetchArtworks } from '@/lib/api';
@@ -25,17 +25,12 @@ export default async function Homepage({ searchParams }: HomepageProps) {
   const artworks: Artwork[] = await fetchArtworks(finalPage, is_public_domain == 'true', is_on_view == 'true', searchQuery);
 
   return (
-    <main className="p-6">
+    <main className="p-4 max-w-md mx-auto space-y-6">
+
 
       <SearchBar searchQuery={searchQuery} publicDomain={is_public_domain == 'true'} onView={is_on_view == 'true'} />
 
-      <div className="flex flex-row flex-wrap" >
-        {
-          artworks.map((artwork: Artwork) => (
-            <ArtworkCard key={artwork.id} painting={artwork} />
-          ))
-        }
-      </div>
+      <HomepageDisplay artworks={artworks}/>
 
       <PaginationHandler page={finalPage} term={term} isPublicDomain={is_public_domain == 'true'} isOnView={is_on_view == 'true'}/>
     </main>

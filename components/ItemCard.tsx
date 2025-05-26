@@ -8,7 +8,6 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { stripHtml } from "@/lib/htmlUtils";
-import Link from "next/link";
 import { FavButton } from "./FavButton";
 
 export type ItemCardProps = {

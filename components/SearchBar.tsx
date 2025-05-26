@@ -1,7 +1,12 @@
 'use client'; 
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation'; 
+import { useRouter } from 'next/navigation';
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+
 
 type SearchBarProps = {
     searchQuery: string,
@@ -14,6 +19,7 @@ export function SearchBar({searchQuery, publicDomain, onView} : SearchBarProps) 
   const [mounted, setMounted] = useState(false);
   const [isPublicDomain, setIsPublicDomain] = useState(publicDomain);
   const [isOnView, setIsOnView] = useState(onView);
+  const [filtersOpen, setFiltersOpen] = useState(publicDomain || onView);
   const router = useRouter(); 
 
   // Ensure the component is only using the router after it has mounted client-side
@@ -49,36 +55,58 @@ export function SearchBar({searchQuery, publicDomain, onView} : SearchBarProps) 
   if (!mounted) return null;
 
   return (
-    <form onSubmit={handleSubmit}>
-        <input
+    <form onSubmit={handleSubmit} className='flex flex-col'>
+      <div className='flex justify-center items-center gap-3'>
+        <div className="w-3/4">
+          <Input
+            id="searchQuery"
             type="text"
-            value={query}
-            onChange={handleSearch}
             placeholder="Search for artworks..."
-        />
-    <label>
-        <input
-          type="checkbox"
-          name="is_public_domain"
-          value="true"
-          checked={isPublicDomain}
-          onChange={(e) => setIsPublicDomain(e.target.checked)}
-        />
-        Public Domain
-      </label>
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="p-3"
+          />
+        </div>
 
-      <label>
-        <input
-          type="checkbox"
-          name="is_on_view"
-          value="true"
-          checked={isOnView}
-          onChange={(e) => setIsOnView(e.target.checked)}
-        />
-        On View
-      </label>
+        <Button type="submit" className="w-auto">
+          Search
+        </Button>
+      </div>
 
-      <button type="submit">Search</button>
+      <div className="w-auto">
+        <button
+          type="button"
+          className="flex items-center gap-2 text-sm font-medium text-gray-700 ml-3 mt-1 hover:underline"
+          onClick={() => setFiltersOpen(!filtersOpen)}
+          aria-expanded={filtersOpen}
+          aria-controls="filters-section"
+        >
+          {filtersOpen ? "Hide" : "Show"} Advanced Filters 
+        </button>
+        <div className={`flex space-x-2 ml-3 mt-2 ${filtersOpen ? "block" : "hidden"}`}>
+          <div className="flex items-center space-x-1">
+            <Checkbox
+              id="publicDomain"
+              checked={isPublicDomain}
+              onCheckedChange={(checked) => setIsPublicDomain(!!checked)}
+            />
+            <Label htmlFor="publicDomain" className="select-none">
+              Public Domain
+            </Label>
+          </div>
+
+          <div className="flex items-center space-x-1">
+            <Checkbox
+              id="onView"
+              checked={isOnView}
+              onCheckedChange={(checked) => setIsOnView(!!checked)}
+            />
+            <Label htmlFor="onView" className="select-none">
+              On View
+            </Label>
+          </div>
+        </div>
+      </div>
     </form>
   );
 }
