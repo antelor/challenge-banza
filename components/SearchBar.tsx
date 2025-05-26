@@ -4,12 +4,13 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'; 
 
 type SearchBarProps = {
+    searchQuery: string,
     publicDomain: boolean,
     onView: boolean
 }
 
-export function SearchBar({publicDomain, onView} : SearchBarProps) {
-  const [query, setQuery] = useState('');
+export function SearchBar({searchQuery, publicDomain, onView} : SearchBarProps) {
+  const [query, setQuery] = useState(searchQuery);
   const [mounted, setMounted] = useState(false);
   const [isPublicDomain, setIsPublicDomain] = useState(publicDomain);
   const [isOnView, setIsOnView] = useState(onView);
@@ -34,6 +35,8 @@ export function SearchBar({publicDomain, onView} : SearchBarProps) {
     if (!mounted) return;
     
     const params = new URLSearchParams();
+
+    params.set('page', '1'); // Reset page on new search/filter
     
     if (query) params.set('term', query);
     if (isPublicDomain) params.set('is_public_domain', 'true');

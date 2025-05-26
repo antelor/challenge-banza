@@ -27,7 +27,7 @@ export default async function Homepage({ searchParams }: HomepageProps) {
   return (
     <main className="p-6">
 
-      <SearchBar publicDomain={is_public_domain == 'true'} onView={is_on_view == 'true'} />
+      <SearchBar searchQuery={searchQuery} publicDomain={is_public_domain == 'true'} onView={is_on_view == 'true'} />
 
       <div className="flex flex-row flex-wrap" >
         {
