@@ -1,13 +1,5 @@
-import { Artwork } from '@/types/artwork';
-import { FavButton } from '@/components/FavButton';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 import { fetchItem } from '@/lib/api';
 import { ItemCard } from '@/components/ItemCard';
 
@@ -26,6 +18,11 @@ export default async function ItemPage({ params }: ItemPageProps) {
   }
 
   return (
-    <ItemCard item={item} />
+    <main className='flex flex-col gap-3 items-center'>
+      <ItemCard item={item} />
+      <Link href="/">
+        <Button variant="secondary" size="lg">Go back</Button>
+      </Link>
+    </main>
   );
 }
