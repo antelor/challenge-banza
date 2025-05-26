@@ -1,63 +1,72 @@
 import { Artwork } from "@/types/artwork";
 
+//Creates query for homepage artworks
+export function buildQueryString(
+    page: number,
+    searchQuery?: string,
+    is_public_domain?: boolean,
+    is_on_view?: boolean
+  ): string {
+    const params = new URLSearchParams();
+  
+    const isSearch = searchQuery && searchQuery.trim() !== '';
+  
+    if (isSearch) {
+      params.set('q', searchQuery!.trim());
+    } else {
+      params.set('page', String(page));
+    }
+  
+    params.set('limit', '20');
+    params.set('fields', 'id,title,thumbnail,date_display,description,artist_id,artist_title,image_id,is_public_domain,is_on_view');
+
+    if (is_public_domain === true) {
+      params.set('is_public_domain', 'true');
+    }
+  
+    if (is_on_view === true) {
+      params.set('is_on_view', 'true');
+    }
+  
+    return params.toString();
+}
+
 //Homepage: Imports artworks JSON based on page params
 export async function fetchArtworks(
-    page = 1, 
-    isPublicDomain?: boolean, 
-    isOnView?: boolean, 
+    page = 1,
+    is_public_domain?: boolean,
+    is_on_view?: boolean,
     searchQuery?: string
   ): Promise<Artwork[]> {
-    let url: string;
+    const isSearch = searchQuery && searchQuery.trim() !== '';
+    const baseUrl = isSearch
+      ? 'https://api.artic.edu/api/v1/artworks/search'
+      : 'https://api.artic.edu/api/v1/artworks';
   
-    // If searchQuery exists, use the search endpoint
-    if (searchQuery && searchQuery.trim() !== '') {
-      url = `https://api.artic.edu/api/v1/artworks/search?q=${encodeURIComponent(searchQuery)}&limit=20&fields=id,title,thumbnail,date_display,description,artist_id,artist_title,image_id,is_public_domain,is_on_view`;
+    const queryString = buildQueryString(page, searchQuery, is_public_domain, is_on_view);
   
-    } else {
-      // Otherwise, use the regular artworks endpoint
-      url = `https://api.artic.edu/api/v1/artworks?page=${page}&limit=20&fields=id,title,thumbnail,date_display,description,artist_id,artist_title,image_id,is_public_domain,is_on_view`;
+    const url = `${baseUrl}?${queryString}`;
   
-      // Dynamically add filters if provided
-      if (isPublicDomain !== undefined) {
-        url += `&is_public_domain=${isPublicDomain}`;
-      }
-      if (isOnView !== undefined) {
-        url += `&is_on_view=${isOnView}`;
-      }
-    }
-    
-  
-    // Add the filters if specified
-    if (isPublicDomain !== undefined) {
-      url += `&is_public_domain=${isPublicDomain}`;
-    }
-  
-    if (isOnView !== undefined) {
-      url += `&is_on_view=${isOnView}`;
-    }
-  
-    console.log(url)
-  
-    // Fetch the data
     const res = await fetch(url);
     if (!res.ok) {
       console.error('Error fetching artworks:', res.statusText);
-      return [];  // Return an empty array in case of error
+      return [];
     }
+  
     const data = await res.json();
+  
     if (!data.data || data.data.length === 0) {
       console.log('No artworks found for the given query.');
+      return [];
     }
-    
-    //Add URL to artworks
-    const artworksWithUrl: Artwork[] = data.data.map((artwork: Artwork) => ({
+  
+    return data.data.map((artwork: Artwork) => ({
       ...artwork,
       iiif_url: data.config.iiif_url,
-      width: artwork.width ?? 500,   // default to 500px if missing
+      width: artwork.width ?? 500, // default 500px width if missing
     }));
-  
-    return artworksWithUrl;
 }
+  
 
 //Item page: Fetches information for singular artwork based on ID
 export async function fetchItem(id: string): Promise<Artwork | null> {

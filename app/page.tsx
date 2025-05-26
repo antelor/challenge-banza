@@ -1,41 +1,33 @@
 import { ArtworkCard } from '@/components/ArtworkCard';
 import { Artwork } from '@/types/artwork';
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import { SearchBar } from '@/components/SearchBar';
 import { fetchArtworks } from '@/lib/api';
+import { PaginationHandler } from '@/components/PaginationHandler';
 
 export const revalidate = 0;
 
 type HomepageProps = {
   searchParams: { 
     page?: string; 
-    isPublicDomain?: boolean; 
-    isOnView?: boolean,
+    is_public_domain?: string; 
+    is_on_view?: string,
     term?: string
   };
 };
 
 export default async function Homepage({ searchParams }: HomepageProps) {
-  const { page = '1', isPublicDomain, isOnView, term } = await searchParams;
+  const { page = '1', is_public_domain, is_on_view, term } = await searchParams;
   const rawPage = Number(page);
   const finalPage = rawPage >= 1 ? rawPage : 1;
 
   const searchQuery = term ?? '';
 
-  const artworks: Artwork[] = await fetchArtworks(finalPage, isPublicDomain, isOnView, searchQuery);
+  const artworks: Artwork[] = await fetchArtworks(finalPage, is_public_domain == 'true', is_on_view == 'true', searchQuery);
 
   return (
     <main className="p-6">
 
-      <SearchBar />
+      <SearchBar publicDomain={is_public_domain == 'true'} onView={is_on_view == 'true'} />
 
       <div className="flex flex-row flex-wrap" >
         {
@@ -45,25 +37,7 @@ export default async function Homepage({ searchParams }: HomepageProps) {
         }
       </div>
 
-      <Pagination>
-        <PaginationContent>
-          { finalPage > 1 &&
-            <PaginationItem>
-              <PaginationPrevious href={`/?page=${finalPage - 1}`} />
-            </PaginationItem>
-          }
-          <PaginationItem>
-            <PaginationLink href="#">{finalPage}</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext href={`/?page=${finalPage + 1}`} />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
-
+      <PaginationHandler page={finalPage} term={term} isPublicDomain={is_public_domain == 'true'} isOnView={is_on_view == 'true'}/>
     </main>
   );
 }

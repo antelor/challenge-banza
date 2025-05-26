@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { stripHtml } from '@/utils/htmlUtils';
+import { stripHtml } from '@/lib/htmlUtils';
 import Link from 'next/link';
 
 export type ArtworkCardProps = {

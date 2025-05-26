@@ -1,40 +1,80 @@
-'use client'; // This ensures the component is client-side
+'use client'; 
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation'; // Use useRouter from next/navigation
+import { useRouter } from 'next/navigation'; 
 
-export function SearchBar() {
+type SearchBarProps = {
+    publicDomain: boolean,
+    onView: boolean
+}
+
+export function SearchBar({publicDomain, onView} : SearchBarProps) {
   const [query, setQuery] = useState('');
   const [mounted, setMounted] = useState(false);
-  const router = useRouter(); // New useRouter hook from next/navigation
+  const [isPublicDomain, setIsPublicDomain] = useState(publicDomain);
+  const [isOnView, setIsOnView] = useState(onView);
+  const router = useRouter(); 
 
   // Ensure the component is only using the router after it has mounted client-side
   useEffect(() => {
-    setMounted(true); // Update after the component has mounted
+    setMounted(true); 
   }, []);
+
+  useEffect(() => {
+    setIsPublicDomain(publicDomain);
+    setIsOnView(onView);
+  }, [publicDomain, onView]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (mounted) {
-      router.push(`/?term=${query}`); // Programmatically navigate using router.push()
-    }
+    e.preventDefault(); //Prevent reload
+    if (!mounted) return;
+    
+    const params = new URLSearchParams();
+    
+    if (query) params.set('term', query);
+    if (isPublicDomain) params.set('is_public_domain', 'true');
+    if (isOnView) params.set('is_on_view', 'true');
+    
+    router.push(`/?${params.toString()}`);
   };
 
-  // Prevent rendering before client-side hydration
+  // Prevent rendering before client-side loading
   if (!mounted) return null;
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={query}
-        onChange={handleSearch}
-        placeholder="Search for artworks..."
-      />
+        <input
+            type="text"
+            value={query}
+            onChange={handleSearch}
+            placeholder="Search for artworks..."
+        />
+    <label>
+        <input
+          type="checkbox"
+          name="is_public_domain"
+          value="true"
+          checked={isPublicDomain}
+          onChange={(e) => setIsPublicDomain(e.target.checked)}
+        />
+        Public Domain
+      </label>
+
+      <label>
+        <input
+          type="checkbox"
+          name="is_on_view"
+          value="true"
+          checked={isOnView}
+          onChange={(e) => setIsOnView(e.target.checked)}
+        />
+        On View
+      </label>
+
       <button type="submit">Search</button>
     </form>
   );
