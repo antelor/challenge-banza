@@ -9,7 +9,7 @@ export default function Navbar() {
       </Link>
       <div className="space-x-2">
         <Link href="/favorites">
-          <Button variant="outline" size="sm">Favorites</Button>
+          <Button variant="outline" size="sm" className="bg-yellow-300">Favorites</Button>
         </Link>
         <Link href="/about">
           <Button variant="ghost" size="sm">About</Button>

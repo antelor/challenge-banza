@@ -29,11 +29,11 @@ export function ArtworkCard({ painting }: ArtworkCardProps) {
           <img
             src={`${painting.iiif_url}/${painting.image_id}/full/${painting.width},/0/default.jpg`}
             alt={painting.title}
-            className="object-contain h-60 w-auto mx-auto"
+            className="object-contain h-full w-auto mx-auto"
           />
 
         </CardContent>
-        
+
         {/* Hover overlay */}
         <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 group-hover:opacity-100 text-white flex flex-col items-center justify-center text-center p-4 transition-opacity duration-300 pointer-events-none">
           {parsedDescription && (
