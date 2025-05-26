@@ -7,7 +7,7 @@ export type HomepageDisplayProps = {
 
 export function HomepageDisplay({ artworks }: HomepageDisplayProps) {
 	return (
-        <div className="flex flex-row flex-wrap" >
+        <div className="flex flex-row flex-wrap space-y-3" >
         {
           artworks.map((artwork: Artwork) => (
             <ArtworkCard key={artwork.id} painting={artwork} />

@@ -18,28 +18,29 @@ export function ArtworkCard({ painting }: ArtworkCardProps) {
   const parsedDescription = stripHtml(painting.description);
 
   return (
-    <Card className="relative overflow-hidden group cursor-pointer">
+    <Card className="relative overflow-hidden group cursor-pointer p-2 w-full">
       <Link href={`item/${painting.id}`} className="block h-full w-full">
-        <CardHeader>
+        <CardHeader className='p-2'>
           <CardTitle>{painting.title}</CardTitle>
-          <CardTitle>{painting.artist_title}</CardTitle>
+          <CardDescription>{painting.artist_title}</CardDescription>
         </CardHeader>
 
-        <CardContent className="relative p-0 flex items-center justify-center h-60">
+        <CardContent className="relative p-1 flex flex-grow items-center justify-center">
           <img
             src={`${painting.iiif_url}/${painting.image_id}/full/${painting.width},/0/default.jpg`}
             alt={painting.title}
-            className="max-h-full max-w-full object-contain"
+            className="object-contain h-60 w-auto mx-auto"
           />
 
-          {/* Hover overlay */}
-          <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 group-hover:opacity-100 text-white flex flex-col items-center justify-center text-center p-4 transition-opacity duration-300 pointer-events-none">
-            {parsedDescription && (
-              <p className="text-sm line-clamp-5">{parsedDescription}</p>
-            )}
-            <div>Click to read more</div>
-          </div>
         </CardContent>
+        
+        {/* Hover overlay */}
+        <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 group-hover:opacity-100 text-white flex flex-col items-center justify-center text-center p-4 transition-opacity duration-300 pointer-events-none">
+          {parsedDescription && (
+            <p className="text-sm line-clamp-5">{parsedDescription}</p>
+          )}
+          <div>Click to read more</div>
+        </div>
       </Link>
     </Card>
     

@@ -17,7 +17,7 @@ export function buildQueryString(
       params.set('page', String(page));
     }
   
-    params.set('limit', '20');
+    params.set('limit', '10');
     params.set('fields', 'id,title,thumbnail,date_display,description,artist_id,artist_title,image_id,is_public_domain,is_on_view');
 
     if (is_public_domain === true) {
