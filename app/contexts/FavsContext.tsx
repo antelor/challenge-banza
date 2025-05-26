@@ -1,8 +1,8 @@
 'use client'
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useEffect, useState, ReactNode } from 'react';
 
 type FavsContextType = {
-  Favs: string[];
+  favs: string[];
 
   addFavorite: (id: string) => void;
   removeFavorite: (id: string) => void;
@@ -12,7 +12,23 @@ type FavsContextType = {
 export const FavsContext = createContext<FavsContextType | undefined>(undefined);
 
 export const FavsProvider = ({ children }: { children: ReactNode }) => {
-  const [Favs, setFavs] = useState<string[]>([]);
+  const [favs, setFavs] = useState<string[]>([]);
+
+  useEffect(() => {
+    const stored = localStorage.getItem('favs');
+    if (stored) {
+      try {
+        setFavs(JSON.parse(stored));
+      } catch (error) {
+        console.error('Failed to parse favorites from localStorage', error);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('favs', JSON.stringify(favs));
+  }, [favs]);
+
 
   const addFavorite = (id: string) => {
     setFavs((prev) => {
@@ -29,10 +45,10 @@ export const FavsProvider = ({ children }: { children: ReactNode }) => {
     });    
   };
 
-  const isFavorite = (id: string) => Favs.includes(id);
+  const isFavorite = (id: string) => favs.includes(id);
 
   return (
-    <FavsContext.Provider value={{ Favs, addFavorite, removeFavorite, isFavorite }}>
+    <FavsContext.Provider value={{ favs, addFavorite, removeFavorite, isFavorite }}>
       {children}
     </FavsContext.Provider>
   );
