@@ -21,7 +21,10 @@ export function ItemCard({ item }: ItemCardProps) {
 		<Card className="p-0">
 			<CardHeader className="mb-1 pb-2">
 				<CardTitle className="text-2xl font-bold">{item.title}</CardTitle>
-				<CardDescription className="p-0">{item.artist_title}</CardDescription>
+				<CardDescription className="p-0 text-base">{item.artist_title}</CardDescription>
+				{item.dimensions &&
+					<CardDescription className="p-0 text-xs">{item.dimensions.split(';')[0].trim() }</CardDescription>
+				}				
 			</CardHeader>
 			<CardContent>
 				<img

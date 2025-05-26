@@ -71,7 +71,7 @@ export async function fetchArtworks(
 
 //Item page: Fetches information for singular artwork based on ID
 export async function fetchItem(id: string): Promise<Artwork | null> {
-    const res = await fetch(`https://api.artic.edu/api/v1/artworks/${id}?fields=id,title,thumbnail,date_display,description,artist_id,artist_title,image_id`);
+    const res = await fetch(`https://api.artic.edu/api/v1/artworks/${id}?fields=id,title,thumbnail,date_display,description,artist_id,artist_title,image_id,dimensions`);
     if (!res.ok) return null;
     const data = await res.json();
     const item = data.data;

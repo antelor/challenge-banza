@@ -10,5 +10,6 @@ export interface Artwork {
     artist_title: string;
     width: string;
     height: string;
+    dimensions:string;
 }
   
