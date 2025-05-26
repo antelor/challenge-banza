@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ChevronUp, ChevronDown } from "lucide-react";
 
 
 type SearchBarProps = {
@@ -76,13 +77,15 @@ export function SearchBar({searchQuery, publicDomain, onView} : SearchBarProps) 
       <div className="w-auto">
         <button
           type="button"
-          className="flex items-center gap-2 text-sm font-medium text-gray-700 ml-3 mt-1 hover:underline"
+          className="flex items-center text-sm font-medium text-gray-700 ml-3 mt-2 hover:underline px-2 py-1"
           onClick={() => setFiltersOpen(!filtersOpen)}
           aria-expanded={filtersOpen}
           aria-controls="filters-section"
         >
-          {filtersOpen ? "Hide" : "Show"} Advanced Filters 
+          {filtersOpen ? "Hide" : "Show"} Advanced Filters{" "}
+          {filtersOpen ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
         </button>
+
         <div className={`flex space-x-2 ml-3 mt-2 ${filtersOpen ? "block" : "hidden"}`}>
           <div className="flex items-center space-x-1">
             <Checkbox
