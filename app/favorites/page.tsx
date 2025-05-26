@@ -29,7 +29,7 @@ export default function FavoritesPage() {
     
       
     return (
-        <main className="p-6">
+        <main className="p-6 space-y-4">
             {favs ? //To avoid flicker 
                 artworks.map((favItem: Artwork, key: number) => (
                     <ItemCard key={key} item={favItem}/>

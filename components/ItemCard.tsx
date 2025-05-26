@@ -18,21 +18,25 @@ export function ItemCard({ item }: ItemCardProps) {
 	const parsedDescription = stripHtml(item.description);
 
 	return (
-		<Card className="p-6">
-			<CardTitle className="text-2xl font-bold mb-4">{item.title}</CardTitle>
-			<CardDescription>
-				<p className="mb-2 text-gray-700">{item.artist_title}</p>
+		<Card className="p-1">
+			<CardHeader className="mb-1 pb-2">
+				<CardTitle className="text-2xl font-bold">{item.title}</CardTitle>
+				<CardDescription className="p-0">{item.artist_title}</CardDescription>
+			</CardHeader>
+			<CardContent>
 				<img
 					src={`${item.iiif_url}/${item.image_id}/full/843,/0/default.jpg`}
 					alt={item.title}
-					className="max-w-xl"
+					className="object-contain w-full h-auto"
 				/>
-				<p className="mt-4">
-					{parsedDescription || "No description available."}
-				</p>
-			</CardDescription>
 
-			<CardFooter>
+				<CardDescription className="mt-6">
+					{parsedDescription || "No description available for this piece."}
+				</CardDescription>
+			</CardContent>
+			
+
+			<CardFooter className="flex justify-end">
 				<FavButton paintingId={item.id} />
 			</CardFooter>
 		</Card>

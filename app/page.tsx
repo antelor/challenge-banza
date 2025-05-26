@@ -26,8 +26,6 @@ export default async function Homepage({ searchParams }: HomepageProps) {
 
   return (
     <main className="p-4 max-w-md mx-auto space-y-6">
-
-
       <SearchBar searchQuery={searchQuery} publicDomain={is_public_domain == 'true'} onView={is_on_view == 'true'} />
 
       <HomepageDisplay artworks={artworks}/>
