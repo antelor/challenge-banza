@@ -18,7 +18,7 @@ export function ItemCard({ item }: ItemCardProps) {
 	const parsedDescription = stripHtml(item.description);
 
 	return (
-		<Card className="p-1">
+		<Card className="p-0">
 			<CardHeader className="mb-1 pb-2">
 				<CardTitle className="text-2xl font-bold">{item.title}</CardTitle>
 				<CardDescription className="p-0">{item.artist_title}</CardDescription>
