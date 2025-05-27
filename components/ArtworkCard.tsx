@@ -3,7 +3,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -25,13 +24,18 @@ export function ArtworkCard({ painting }: ArtworkCardProps) {
           <CardDescription>{painting.artist_title}</CardDescription>
         </CardHeader>
 
-        <CardContent className="relative p-1 flex flex-grow items-center justify-center">
+        <CardContent className="relative p-1 flex flex-row flex-grow items-center">
           <img
             src={`${painting.iiif_url}/${painting.image_id}/full/${painting.width},/0/default.jpg`}
             alt={painting.title}
-            className="object-contain h-full w-auto mx-auto"
+            className="object-contain h-full w-[65%] mx-auto"
           />
 
+          <div className='hidden md:block p-5'>
+            {parsedDescription && (
+              <p className="text-sm line-clamp-6">{parsedDescription}</p>
+            )}
+          </div>
         </CardContent>
 
         {/* Hover overlay */}

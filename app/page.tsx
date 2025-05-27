@@ -25,7 +25,7 @@ export default async function Homepage({ searchParams }: HomepageProps) {
   const artworks: Artwork[] = await fetchArtworks(finalPage, is_public_domain == 'true', is_on_view == 'true', searchQuery);
 
   return (
-    <main className="p-4 max-w-md mx-auto space-y-6">
+    <main className="p-4 max-w-md mx-auto space-y-6 md:max-w-full">
       <SearchBar searchQuery={searchQuery} publicDomain={is_public_domain == 'true'} onView={is_on_view == 'true'} />
 
       <HomepageDisplay artworks={artworks}/>
