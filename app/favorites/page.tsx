@@ -5,6 +5,14 @@ import { FavsContext } from '@/app/contexts/FavsContext';
 import { fetchArtworksByIds } from '@/lib/api';
 import { Artwork } from '@/types/artwork';
 import { ItemCard } from '@/components/ItemCard';
+import Masonry from 'react-masonry-css';
+
+const breakpointColumnsObj = {
+    default: 3,     // default = desktop
+    1024: 2,        // desktop
+    768: 1          // tablets 
+    // < 768px: mobile view
+};
 
 export default function FavoritesPage() {
     const context = useContext(FavsContext);
@@ -31,9 +39,25 @@ export default function FavoritesPage() {
     return (
         <main className="p-6 space-y-4">
             {favs ? //To avoid flicker 
-                artworks.map((favItem: Artwork, key: number) => (
-                    <ItemCard key={key} item={favItem}/>
-                    ))
+                <>
+                <div className="hidden md:block">
+                    <Masonry
+                    breakpointCols={breakpointColumnsObj}
+                    className="flex w-auto -ml-4"
+                    columnClassName="pl-4"
+                    >
+                        {artworks.map((favItem: Artwork, key: number) => (
+                            <ItemCard key={key} item={favItem}/>
+                        ))}
+                    </Masonry>
+                </div>
+
+                <div className="block md:hidden space-y-4">
+                    {artworks.map((favItem: Artwork, key: number) => (
+                        <ItemCard key={key} item={favItem}/>
+                    ))}
+                </div>
+                </>
                 :
                 <div>Loading favorites</div>
             }

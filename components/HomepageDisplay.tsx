@@ -16,7 +16,7 @@ export type HomepageDisplayProps = {
 
 export function HomepageDisplay({ artworks }: HomepageDisplayProps) {
 	return (
-        <main>
+      <main>
         <div className="hidden md:block">
         <Masonry
           breakpointCols={breakpointColumnsObj}
@@ -38,6 +38,6 @@ export function HomepageDisplay({ artworks }: HomepageDisplayProps) {
           ))
         }
       </div>
-      </main>
+    </main>
 	);
 }

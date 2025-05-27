@@ -43,7 +43,7 @@ export function ArtworkCard({ painting }: ArtworkCardProps) {
           {parsedDescription && (
             <p className="text-sm line-clamp-5">{parsedDescription}</p>
           )}
-          <div>Click to read more</div>
+          <div className='mt-4 text-xl'>Click to read more</div>
         </div>
       </Link>
     </Card>
