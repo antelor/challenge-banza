@@ -47,14 +47,14 @@ export default function FavoritesPage() {
                     columnClassName="pl-4"
                     >
                         {artworks.map((favItem: Artwork, key: number) => (
-                            <ItemCard key={key} item={favItem}/>
+                            <ItemCard key={key} item={favItem} isFavPage={true}/>
                         ))}
                     </Masonry>
                 </div>
 
                 <div className="block md:hidden space-y-4">
                     {artworks.map((favItem: Artwork, key: number) => (
-                        <ItemCard key={key} item={favItem}/>
+                        <ItemCard key={key} item={favItem} isFavPage={true}/>
                     ))}
                 </div>
                 </>

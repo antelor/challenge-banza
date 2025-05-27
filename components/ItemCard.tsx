@@ -9,39 +9,51 @@ import {
 } from "@/components/ui/card";
 import { stripHtml } from "@/lib/htmlUtils";
 import { FavButton } from "./FavButton";
+import Link from "next/link";
+import { Button } from "./ui/button";
 
 export type ItemCardProps = {
 	item: Artwork;
+	isFavPage: boolean
 };
 
-export function ItemCard({ item }: ItemCardProps) {
+export function ItemCard({ item, isFavPage }: ItemCardProps) {
 	const parsedDescription = stripHtml(item.description);
 
 	return (
-		<Card className="p-0">
-			<CardHeader className="mb-1 pb-2">
-				<CardTitle className="text-2xl font-bold">{item.title}</CardTitle>
-				<CardDescription className="p-0 text-base">{item.artist_title}</CardDescription>
-				{item.dimensions &&
-					<CardDescription className="p-0 text-xs">{item.dimensions.split(';')[0].trim() }</CardDescription>
-				}				
-			</CardHeader>
-			<CardContent>
+		<Card className="p-0 md:flex md:flex-row">
+			<CardContent className="p-6">
 				<img
 					src={`${item.iiif_url}/${item.image_id}/full/843,/0/default.jpg`}
 					alt={item.title}
 					className="object-contain w-full h-auto"
 				/>
-
-				<CardDescription className="mt-6">
-					{parsedDescription || "No description available for this piece."}
-				</CardDescription>
 			</CardContent>
 			
+			<div className="md:w-1/2 flex flex-col">
+				<CardHeader className="mb-1 pb-2">
+					<CardTitle className="text-2xl font-bold">{item.title}</CardTitle>
+					<CardDescription className="p-0 text-base">{item.artist_title}</CardDescription>
+					{item.dimensions &&
+						<CardDescription className="p-0 text-xs">{item.dimensions.split(';')[0].trim() }</CardDescription>
+					}				
+				</CardHeader>
 
-			<CardFooter className="flex justify-end">
-				<FavButton paintingId={item.id} />
-			</CardFooter>
+				<CardContent>
+					<CardDescription className="mt-6">
+						{parsedDescription || "No description available for this piece."}
+					</CardDescription>
+				</CardContent>
+
+				<CardFooter className="flex justify-end gap-5">
+					<FavButton paintingId={item.id} />
+					{ !isFavPage &&
+						<Link href="/" className='hidden md:block'>
+							<Button size="lg" aria-label="Toggle favorite" variant={'outline'} className="h-10 m-0 fill-gray-400">Go back</Button>
+						</Link>
+					}
+				</CardFooter>
+			</div>
 		</Card>
 	);
 }

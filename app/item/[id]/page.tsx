@@ -19,8 +19,8 @@ export default async function ItemPage({ params }: ItemPageProps) {
 
   return (
     <main className='flex flex-col gap-3 items-center'>
-      <ItemCard item={item} />
-      <Link href="/">
+      <ItemCard item={item} isFavPage={false}/>
+      <Link href="/" className='block md:hidden'>
         <Button variant="secondary" size="lg">Go back</Button>
       </Link>
     </main>
