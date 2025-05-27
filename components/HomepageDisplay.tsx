@@ -4,9 +4,9 @@ import { ArtworkCard } from "./ArtworkCard";
 import Masonry from 'react-masonry-css';
 
 const breakpointColumnsObj = {
-  default: 3,     // ≥ 1024px
-  1024: 2,        // ≥ 1024px
-  768: 1          // ≥ 768px
+  default: 3,     // default = desktop
+  1024: 2,        // desktop
+  768: 1          // tablets 
   // < 768px: mobile view
 };
 

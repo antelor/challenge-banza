@@ -58,7 +58,7 @@ export function SearchBar({searchQuery, publicDomain, onView} : SearchBarProps) 
   return (
     <form onSubmit={handleSubmit} className='flex flex-col'>
       <div className='flex justify-center items-center gap-3'>
-        <div className="w-3/4">
+        <div className="w-3/4 md:w-1/2">
           <Input
             id="searchQuery"
             type="text"
@@ -74,7 +74,7 @@ export function SearchBar({searchQuery, publicDomain, onView} : SearchBarProps) 
         </Button>
       </div>
 
-      <div className="w-auto">
+      <div className="md:flex md:items-center md:justify-center w-full">
         <button
           type="button"
           className="flex items-center text-sm font-medium text-gray-700 ml-3 mt-2 hover:underline px-2 py-1"
