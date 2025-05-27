@@ -61,7 +61,9 @@ export async function fetchArtworks(
       return [];
     }
   
-    return data.data.map((artwork: Artwork) => ({
+    return data.data
+    .filter((artwork: Artwork) => artwork.image_id) // Only artworks with images
+    .map((artwork: Artwork) => ({
       ...artwork,
       iiif_url: data.config.iiif_url,
       width: artwork.width ?? 500, // default 500px width if missing
