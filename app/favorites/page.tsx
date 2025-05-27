@@ -44,7 +44,7 @@ export default function FavoritesPage() {
                     <Masonry
                     breakpointCols={breakpointColumnsObj}
                     className="flex w-auto -ml-4"
-                    columnClassName="pl-4"
+                    columnClassName="pl-4 flex flex-col space-y-4"
                     >
                         {artworks.map((favItem: Artwork, key: number) => (
                             <ItemCard key={key} item={favItem} isFavPage={true}/>
