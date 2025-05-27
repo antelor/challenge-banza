@@ -17,7 +17,7 @@ export function ArtworkCard({ painting }: ArtworkCardProps) {
   const parsedDescription = stripHtml(painting.description);
 
   return (
-    <Card className="relative overflow-hidden group cursor-pointer p-2 w-full">
+    <Card className="relative overflow-hidden group cursor-pointer p-2 w-full opacity-0 animate-fade-in">
       <Link href={`item/${painting.id}`} className="block h-full w-full">
         <CardHeader className='p-2'>
           <CardTitle>{painting.title}</CardTitle>

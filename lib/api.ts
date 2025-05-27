@@ -73,15 +73,25 @@ export async function fetchArtworks(
 
 //Item page: Fetches information for singular artwork based on ID
 export async function fetchItem(id: string): Promise<Artwork | null> {
-    const res = await fetch(`https://api.artic.edu/api/v1/artworks/${id}?fields=id,title,thumbnail,date_display,description,artist_id,artist_title,image_id,dimensions`);
-    if (!res.ok) return null;
-    const data = await res.json();
-    const item = data.data;
+  const baseUrl = `https://api.artic.edu/api/v1/artworks/${id}`;
+
+  const params = new URLSearchParams();
+  params.set('fields', 'id,title,thumbnail,date_display,description,artist_id,artist_title,image_id');
+  const query = params.toString()
+
+  const url = `${baseUrl}?${query}`;
+
+  const res = await fetch(url);
   
-    return {
-      ...item,
-      iiif_url: data.config.iiif_url,
-    };
+  if (!res.ok) return null;
+  const data = await res.json();
+  const item = data.data;
+
+  return {
+    ...item,
+    iiif_url: data.config.iiif_url,
+    width: item.width ?? 500, // default 500px width if missing
+  };
 }
 
 //Favorites: Fetches list of artworks based on ID array

@@ -21,10 +21,10 @@ export function ItemCard({ item, isFavPage }: ItemCardProps) {
 	const parsedDescription = stripHtml(item.description);
 
 	return (
-		<Card className="p-0 md:flex md:flex-row">
+		<Card className="p-0 md:flex md:flex-row opacity-0 animate-fade-in">
 			<CardContent className="p-6">
 				<img
-					src={`${item.iiif_url}/${item.image_id}/full/843,/0/default.jpg`}
+					src={`${item.iiif_url}/${item.image_id}/full/${item.width},/0/default.jpg`}
 					alt={item.title}
 					className="object-contain w-full h-auto"
 				/>
