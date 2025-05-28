@@ -7,12 +7,12 @@ import { PaginationHandler } from '@/components/PaginationHandler';
 export const revalidate = 0;
 
 type HomepageProps = {
-  searchParams: { 
+  searchParams: Promise<{
     page?: string; 
     is_public_domain?: string; 
     is_on_view?: string,
     term?: string
-  };
+  }>;
 };
 
 export default async function Homepage({ searchParams }: HomepageProps) {
