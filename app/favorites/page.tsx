@@ -59,8 +59,8 @@ export default function FavoritesPage() {
                         columnClassName="pl-4 flex flex-col space-y-4"
                         >
                             {artworks.map((favItem: Artwork, key: number) => (
-                                <Link href={`item/${favItem.id}`} className="block h-full w-full">
-                                    <ItemCard key={key} item={favItem} isFavPage={true}/>
+                                <Link key={key} href={`item/${favItem.id}`} className="block h-full w-full">
+                                    <ItemCard item={favItem} isFavPage={true}/>
                                 </Link>
                             ))}
                         </Masonry>
@@ -68,8 +68,8 @@ export default function FavoritesPage() {
 
                     <div className="block md:hidden space-y-4">
                         {artworks.map((favItem: Artwork, key: number) => (
-                            <Link href={`item/${favItem.id}`} className="block h-full w-full">
-                                <ItemCard key={key} item={favItem} isFavPage={true}/>
+                            <Link key={key} href={`item/${favItem.id}`} className="block h-full w-full">
+                                <ItemCard item={favItem} isFavPage={true}/>
                             </Link>
                         ))}
                     </div>

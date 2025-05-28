@@ -33,10 +33,6 @@ export function SearchBar({searchQuery, publicDomain, onView} : SearchBarProps) 
     setIsOnView(onView);
   }, [publicDomain, onView]);
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault(); //Prevent reload
     if (!mounted) return;

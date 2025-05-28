@@ -1,5 +1,5 @@
 'use client'
-import { createContext, useEffect, useState, ReactNode } from 'react';
+import { createContext, useState, ReactNode } from 'react';
 
 type FavsContextType = {
   favs: string[];
