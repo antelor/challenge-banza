@@ -17,7 +17,7 @@ export function buildQueryString(
       params.set('page', String(page));
     }
   
-    params.set('limit', '10');
+    params.set('limit', '20');
     params.set('fields', 'id,title,thumbnail,date_display,description,artist_id,artist_title,image_id,is_public_domain,is_on_view');
 
     if (is_public_domain === true) {
@@ -45,6 +45,7 @@ export async function fetchArtworks(
   
     const queryString = buildQueryString(page, searchQuery, is_public_domain, is_on_view);
   
+    //Build URL based on params and search/normal homepage view
     const url = `${baseUrl}?${queryString}`;
   
     const res = await fetch(url);
@@ -115,8 +116,8 @@ export async function fetchRandomArtwork() {
   const countData = await countRes.json();
   const totalArtworks = countData.pagination.total;
 
-  // Get random page (assuming 12 per page)
-  const perPage = 12;
+  // Get random page
+  const perPage = 20;
   const maxPage = Math.floor(totalArtworks / perPage);
   const randomPage = Math.floor(Math.random() * maxPage) + 1;
 
