@@ -97,17 +97,16 @@ export async function fetchItem(id: string): Promise<Artwork | null> {
 
 //Favorites: Fetches list of artworks based on ID array
 export async function fetchArtworksByIds(idArray: string[]){
-    let artworks:Artwork[] = [];
+  const artworkPromises = idArray.map(async (id) => {
+    const artwork = await fetchItem(id);
+    if (!artwork) {
+      throw new Error(`Artwork with id ${id} not found`);
+    }
+    return artwork;
+  });
 
-    for (const id of idArray) {
-        const artwork = await fetchItem(id);
-        if (!artwork) {
-          throw new Error(`Artwork with id ${id} not found`);
-        }
-        artworks.push(artwork);
-    }    
+  return await Promise.all(artworkPromises);
 
-    return artworks;
 }
 
 export async function fetchRandomArtwork() {
