@@ -31,3 +31,4 @@ Pagina de favoritos:
 ![Favs page](screenshots/favs.png)
 ![Favs page mobile](screenshots/favs-mobile.png)
 ![Favs pag tablet](screenshots/favs-tablet.png)
+Clickear en una de las tarjetas desde la pagina de favoritos envia a la pagina del item

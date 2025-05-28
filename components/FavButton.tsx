@@ -4,6 +4,8 @@ import { useContext } from 'react';
 import { FavsContext } from '@/app/contexts/FavsContext';
 import { Button } from '@/components/ui/button';
 import { HeartIcon } from 'lucide-react';
+import { MouseEvent } from 'react';
+
 
 export function FavButton({ paintingId }: { paintingId: string }) {
   const context = useContext(FavsContext);
@@ -11,7 +13,10 @@ export function FavButton({ paintingId }: { paintingId: string }) {
   const { addFavorite, removeFavorite, isFavorite } = context;
   const favorite = isFavorite(paintingId);
 
-  const toggleFavorite = () => {
+  const toggleFavorite = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+		e.preventDefault(); 
+
     if (isFavorite(paintingId)) {
         removeFavorite(paintingId);
     } else {

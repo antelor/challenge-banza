@@ -9,8 +9,7 @@ import {
 } from "@/components/ui/card";
 import { stripHtml } from "@/lib/htmlUtils";
 import { FavButton } from "./FavButton";
-import Link from "next/link";
-import { Button } from "./ui/button";
+import { BackButton } from "./BackButton";
 
 export type ItemCardProps = {
 	item: Artwork;
@@ -48,9 +47,7 @@ export function ItemCard({ item, isFavPage }: ItemCardProps) {
 				<CardFooter className="flex justify-end gap-5">
 					<FavButton paintingId={item.id} />
 					{ !isFavPage &&
-						<Link href="/" className='hidden md:block'>
-							<Button size="lg" aria-label="Toggle favorite" variant={'outline'} className="h-10 m-0 fill-gray-400">Go back</Button>
-						</Link>
+						<BackButton/>
 					}
 				</CardFooter>
 			</div>

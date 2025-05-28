@@ -6,6 +6,7 @@ import { fetchArtworksByIds } from '@/lib/api';
 import { Artwork } from '@/types/artwork';
 import { ItemCard } from '@/components/ItemCard';
 import Masonry from 'react-masonry-css';
+import Link from 'next/link';
 
 const breakpointColumnsObj = {
     default: 3,     // default = desktop
@@ -58,14 +59,18 @@ export default function FavoritesPage() {
                         columnClassName="pl-4 flex flex-col space-y-4"
                         >
                             {artworks.map((favItem: Artwork, key: number) => (
-                                <ItemCard key={key} item={favItem} isFavPage={true}/>
+                                <Link href={`item/${favItem.id}`} className="block h-full w-full">
+                                    <ItemCard key={key} item={favItem} isFavPage={true}/>
+                                </Link>
                             ))}
                         </Masonry>
                     </div>
 
                     <div className="block md:hidden space-y-4">
                         {artworks.map((favItem: Artwork, key: number) => (
-                            <ItemCard key={key} item={favItem} isFavPage={true}/>
+                            <Link href={`item/${favItem.id}`} className="block h-full w-full">
+                                <ItemCard key={key} item={favItem} isFavPage={true}/>
+                            </Link>
                         ))}
                     </div>
                 </>
