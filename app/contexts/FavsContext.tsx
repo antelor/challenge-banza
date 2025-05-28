@@ -12,28 +12,31 @@ type FavsContextType = {
 export const FavsContext = createContext<FavsContextType | undefined>(undefined);
 
 export const FavsProvider = ({ children }: { children: ReactNode }) => {
-  const [favs, setFavs] = useState<string[]>([]);
-
-  useEffect(() => {
-    const stored = localStorage.getItem('favs');
-    if (stored) {
+  const [favs, setFavs] = useState<string[]>(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('favs');
       try {
-        setFavs(JSON.parse(stored));
-      } catch (error) {
-        console.error('Failed to parse favorites from localStorage', error);
+        return stored ? JSON.parse(stored) : [];
+      } catch (e) {
+        console.error('Failed to parse favorites from localStorage', e);
       }
     }
-  }, []);
+    return [];
+  });
 
-  useEffect(() => {
-    localStorage.setItem('favs', JSON.stringify(favs));
-  }, [favs]);
+
+  const updateLocalStorage = (newFavs: string[]) => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('favs', JSON.stringify(newFavs));
+    }
+  };
 
 
   const addFavorite = (id: string) => {
     setFavs((prev) => {
         if (prev.includes(id)) return prev;
         const updated = [...prev, id];
+        updateLocalStorage(updated);
         return updated;
     });
   };
@@ -41,6 +44,7 @@ export const FavsProvider = ({ children }: { children: ReactNode }) => {
   const removeFavorite = (id: string) => {
     setFavs((prev) => {
         const updated = prev.filter(favId => favId !== id);
+        updateLocalStorage(updated);
         return updated;
     });    
   };
