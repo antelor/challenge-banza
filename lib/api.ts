@@ -108,3 +108,26 @@ export async function fetchArtworksByIds(idArray: string[]){
 
     return artworks;
 }
+
+export async function fetchRandomArtwork() {
+  // Get total count of artworks from pagination info
+  const countRes = await fetch('https://api.artic.edu/api/v1/artworks?limit=1', { cache: 'no-store' });
+  const countData = await countRes.json();
+  const totalArtworks = countData.pagination.total;
+
+  // Get random page (assuming 12 per page)
+  const perPage = 12;
+  const maxPage = Math.floor(totalArtworks / perPage);
+  const randomPage = Math.floor(Math.random() * maxPage) + 1;
+
+  // Fetch artworks from random page
+  const pageRes = await fetch(`https://api.artic.edu/api/v1/artworks?page=${randomPage}&limit=${perPage}`);
+  const pageData = await pageRes.json();
+
+  // Pick random artwork from results
+  const artworks = pageData.data;
+  const randomIndex = Math.floor(Math.random() * artworks.length);
+  const randomArtwork = artworks[randomIndex];
+
+  return randomArtwork.id;
+}

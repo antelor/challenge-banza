@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { RandomButton } from "./RandomButton";
 
 export default function Navbar() {
   return (
@@ -11,9 +12,7 @@ export default function Navbar() {
         <Link href="/favorites">
           <Button variant="outline" size="sm" className="bg-yellow-300">Favorites</Button>
         </Link>
-        <Link href="/about">
-          <Button variant="ghost" size="sm">About</Button>
-        </Link>
+        <RandomButton/>
       </div>
     </nav>
   );
