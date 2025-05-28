@@ -19,7 +19,12 @@ export default function FavoritesPage() {
     if (!context) throw new Error('FavoriteButton must be used within FavsProvider');
     const { favs } = context;
     const [artworks, setArtworks] = useState<Artwork[]>([]);
+    const [hasMounted, setHasMounted] = useState(false);
 
+    // Delay rendering until after hydration
+    useEffect(() => {
+        setHasMounted(true);
+    }, []);
 
     useEffect(() => {
         if (!favs || favs.length === 0){
@@ -33,8 +38,10 @@ export default function FavoritesPage() {
         };
     
         loadArtworks();
-      }, [favs]);
-    
+    }, [favs]);
+
+    // Avoid hydration mismatch
+    if (!hasMounted) return null;
       
     return (
         <main className="p-6 space-y-4">
