@@ -44,7 +44,7 @@ export function ItemCard({ item, isFavPage }: ItemCardProps) {
 					</CardDescription>
 				</CardContent>
 
-				<CardFooter className="flex justify-end gap-5">
+				<CardFooter className="flex justify-between gap-5">
 					<FavButton paintingId={item.id} />
 					{ !isFavPage &&
 						<BackButton/>
