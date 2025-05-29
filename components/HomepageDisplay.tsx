@@ -17,27 +17,35 @@ export type HomepageDisplayProps = {
 export function HomepageDisplay({ artworks }: HomepageDisplayProps) {
 	return (
       <main>
-        <div className="hidden md:block">
-        <Masonry
-          breakpointCols={breakpointColumnsObj}
-          className="flex w-auto -ml-4"
-          columnClassName="pl-4"
-        >
-          {artworks.map((artwork: Artwork) => (
-            <div key={artwork.id} className="mb-4">
-              <ArtworkCard key={artwork.id} painting={artwork} />
+        {artworks.length == 0 ?
+          <div className="ml-5">
+            No artworks found. Please try another search.
+          </div>
+        :
+          <>
+            <div className="hidden md:block">
+              <Masonry
+                breakpointCols={breakpointColumnsObj}
+                className="flex w-auto -ml-4"
+                columnClassName="pl-4"
+              >
+                {artworks.map((artwork: Artwork) => (
+                  <div key={artwork.id} className="mb-4">
+                    <ArtworkCard key={artwork.id} painting={artwork} />
+                  </div>
+                ))}
+              </Masonry>
             </div>
-          ))}
-        </Masonry>
-      </div>
 
-      <div className="block md:hidden space-y-4">
-        {
-          artworks.map((artwork: Artwork) => (
-            <ArtworkCard key={artwork.id} painting={artwork} />
-          ))
+            <div className="block md:hidden space-y-4">
+              {
+                artworks.map((artwork: Artwork) => (
+                  <ArtworkCard key={artwork.id} painting={artwork} />
+                ))
+              }
+            </div>  
+          </>
         }
-      </div>
     </main>
 	);
 }

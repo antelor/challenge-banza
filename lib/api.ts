@@ -58,7 +58,6 @@ export async function fetchArtworks(
     const data = await res.json();
   
     if (!data.data || data.data.length === 0) {
-      console.log('No artworks found for the given query.');
       return [];
     }
   

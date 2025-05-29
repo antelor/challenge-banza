@@ -30,7 +30,9 @@ export default async function Homepage({ searchParams }: HomepageProps) {
 
       <HomepageDisplay artworks={artworks}/>
 
-      <PaginationHandler page={finalPage} term={term} isPublicDomain={is_public_domain == 'true'} isOnView={is_on_view == 'true'}/>
+      {artworks.length > 0 &&
+        <PaginationHandler page={finalPage} term={term} isPublicDomain={is_public_domain == 'true'} isOnView={is_on_view == 'true'}/>
+      }
     </main>
   );
 }
