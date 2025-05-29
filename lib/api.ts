@@ -90,7 +90,7 @@ export async function fetchItem(id: string): Promise<Artwork | null> {
   return {
     ...item,
     iiif_url: data.config.iiif_url,
-    width: item.width ?? 200, // default 200px width if missing
+    width: item.width ?? 500, // default 500px width if missing
   };
 }
 
