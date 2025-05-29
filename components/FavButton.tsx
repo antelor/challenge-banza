@@ -25,7 +25,7 @@ export function FavButton({ paintingId }: { paintingId: string }) {
   };
 
   return (
-    <Button onClick={toggleFavorite} aria-label="Toggle favorite" variant={'outline'} className="m-0 fill-gray-400 h-10">
+    <Button onClick={toggleFavorite} aria-label="Toggle favorite" variant={'outline'} className="h-auto m-0 fill-gray-400 whitespace-normal">
       {favorite ? "Remove from " : "Add to "} favorites
       <HeartIcon
         className={`w-6 transition-colors ${
